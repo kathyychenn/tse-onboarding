@@ -1,0 +1,15 @@
+.list {
+  margin-top: 3rem;
+}
+
+.itemContainer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  width: 100%;
+}
+
+.title {
+  font: var(--font-heading);
+}
