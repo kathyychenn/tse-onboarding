@@ -81,3 +81,40 @@ export const removeTask: RequestHandler = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateTask: RequestHandler = async (req, res, next) => {
+  // your code here
+  const errors = validationResult(req);
+  const { id } = req.params;
+  const { title, description, isChecked, dateCreated } = req.body;
+
+  try {
+    validationErrorParser(errors);
+
+    // check url id and req body id equal
+    if (id != req.body._id) {
+      res.status(400);
+    }
+
+    // if the ID doesn't exist, then findById returns null
+    const task = await TaskModel.findByIdAndUpdate(id, {
+      title: title,
+      description: description,
+      isChecked: isChecked,
+      dateCreated: dateCreated,
+    });
+
+    // throw error if query null
+    if (task === null) {
+      throw createHttpError(404, "Task not found.");
+    }
+
+    // Set the status code (200) and body (the task object as JSON) of the response.
+    // Note that you don't need to return anything, but you can still use a return
+    // statement to exit the function early.
+    res.status(200).json(task);
+    // your code here
+  } catch (error) {
+    next(error);
+  }
+};
