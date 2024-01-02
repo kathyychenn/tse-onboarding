@@ -1,4 +1,4 @@
-import { type APIResult, get, handleAPIError, post } from "src/api/requests";
+import { type APIResult, get, handleAPIError, post, put } from "src/api/requests";
 
 /**
  * Defines the "shape" of a Task object (what fields are present and their types) for
@@ -86,6 +86,36 @@ export async function createTask(task: CreateTaskRequest): Promise<APIResult<Tas
 export async function getTask(id: string): Promise<APIResult<Task>> {
   try {
     const response = await get(`/api/task/${id}`);
+    const json = (await response.json()) as TaskJSON;
+    return { success: true, data: parseTask(json) };
+  } catch (error) {
+    return handleAPIError(error);
+  }
+}
+
+export async function getAllTasks(): Promise<APIResult<Task[]>> {
+  try {
+    // your code here
+    const response = await get(`/api/tasks`); // Assuming you have a get function for making API requests
+    console.log(response);
+
+    const json = (await response.json()) as TaskJSON[];
+    console.log(json);
+
+    const parsedTasks = json ? Array.from(json, parseTask) : [];
+    // const parsedTasks = Array.from(json.tasks, parseTask);
+    // const parsedTasks = json.tasks.map(parseTask);
+    console.log(parsedTasks);
+    return { success: true, data: parsedTasks };
+  } catch (error) {
+    return handleAPIError(error);
+  }
+}
+
+export async function updateTask(task: UpdateTaskRequest): Promise<APIResult<Task>> {
+  try {
+    // your code here
+    const response = await put(`/api/task/${task._id}`, task);
     const json = (await response.json()) as TaskJSON;
     return { success: true, data: parseTask(json) };
   } catch (error) {
