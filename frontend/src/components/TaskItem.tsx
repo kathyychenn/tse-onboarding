@@ -14,10 +14,15 @@ export function TaskItem({ task: initialTask }: TaskItemProps) {
   const handleToggleCheck = () => {
     // your code here
     setLoading(true);
-
+    console.log("Before toggle:", task.isChecked);
+    console.log("entered toggle check");
+    console.log(task);
+    console.log(task.assignee);
     updateTask({ ...task, isChecked: !task.isChecked, assignee: task.assignee?._id }).then(
       (result) => {
         if (result.success) {
+          console.log("entered result success");
+          // console.log(result.data);
           setTask(result.data);
         } else {
           alert(result.error);
@@ -28,6 +33,8 @@ export function TaskItem({ task: initialTask }: TaskItemProps) {
   };
   let containerClass = styles.textContainer;
   if (task.isChecked) {
+    console.log("After toggle:", task.isChecked);
+    console.log(task);
     containerClass += " " + styles.checked;
   }
   return (

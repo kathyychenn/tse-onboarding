@@ -89,13 +89,16 @@ export const updateTask: RequestHandler = async (req, res, next) => {
   // your code here
   const errors = validationResult(req);
   const { id } = req.params;
-  const { title, description, isChecked, dateCreated } = req.body;
+  const { title, description, isChecked, dateCreated, assignee } = req.body;
 
   try {
     validationErrorParser(errors);
+    console.log("entered updateTask backend");
+    console.log(id);
+    console.log(isChecked);
 
     // check url id and req body id equal
-    if (id != req.body._id) {
+    if (id !== req.body._id) {
       res.status(400);
     }
 
@@ -105,19 +108,23 @@ export const updateTask: RequestHandler = async (req, res, next) => {
       description: description,
       isChecked: isChecked,
       dateCreated: dateCreated,
-    })
-      .populate("assignee")
-      .exec();
+      assignee: assignee,
+    });
 
+    if (task) {
+      console.log(task.isChecked);
+    }
     // throw error if query null
     if (task === null) {
       throw createHttpError(404, "Task not found.");
     }
 
+    const popTask = await TaskModel.findById(id).populate("assignee").exec();
+
     // Set the status code (200) and body (the task object as JSON) of the response.
     // Note that you don't need to return anything, but you can still use a return
     // statement to exit the function early.
-    res.status(200).json(task);
+    res.status(200).json(popTask);
     // your code here
   } catch (error) {
     next(error);

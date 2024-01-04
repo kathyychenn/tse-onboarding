@@ -47,11 +47,13 @@ function parseTask(task: TaskJSON): Task {
     description: task.description,
     isChecked: task.isChecked,
     dateCreated: new Date(task.dateCreated),
-    assignee: {
-      _id: task.assignee?._id || "",
-      name: task.assignee?.name || "",
-      profilePictureURL: task.assignee?.profilePictureURL || "",
-    },
+    assignee: task.assignee
+      ? {
+          _id: task.assignee._id,
+          name: task.assignee.name,
+          profilePictureURL: task.assignee.profilePictureURL,
+        }
+      : undefined,
   };
 }
 
@@ -125,9 +127,11 @@ export async function getAllTasks(): Promise<APIResult<Task[]>> {
 export async function updateTask(task: UpdateTaskRequest): Promise<APIResult<Task>> {
   try {
     // your code here
-    console.log(task.assignee);
+    console.log(task.isChecked);
+    console.log(task._id);
     const response = await put(`/api/task/${task._id}`, task);
     const json = (await response.json()) as TaskJSON;
+    console.log(json);
     return { success: true, data: parseTask(json) };
   } catch (error) {
     return handleAPIError(error);
