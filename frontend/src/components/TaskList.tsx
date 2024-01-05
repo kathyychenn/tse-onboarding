@@ -10,20 +10,12 @@ export interface TaskListProps {
 export function TaskList({ title }: TaskListProps) {
   const [tasks, setTasks] = useState<Task[]>([]);
   useEffect(() => {
-    // your code here
     getAllTasks().then((result) => {
       if (result.success) {
-        // Update the tasks state with the retrieved array of tasks
         setTasks(result.data);
-        console.log(tasks);
       } else {
-        // Display an alert if the request fails
         alert(result.error);
       }
-      //   })
-      //   .catch((error) => {
-      //     // Display an alert for any unexpected errors
-      //     alert(`Error fetching tasks: ${error}`);
     });
   }, []);
 
@@ -34,10 +26,8 @@ export function TaskList({ title }: TaskListProps) {
         {tasks.length === 0 ? (
           <p>No tasks yet. Add one above to get started.</p>
         ) : (
-          // your code here
           <ul>
             {tasks.map((task) => (
-              // your code here
               <TaskItem
                 key={task._id}
                 task={{
