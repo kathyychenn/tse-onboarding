@@ -1,0 +1,26 @@
+.userTag {
+  width: 200px;
+  align-items: center;
+}
+
+.userName {
+  margin-top: 0;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profilePicture {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.assignedTrue {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  column-gap: 8px;
+  align-items: center;
+}
