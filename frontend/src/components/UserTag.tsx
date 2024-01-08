@@ -7,10 +7,10 @@ export interface UserTagProps {
   className: string;
 }
 
-export function UserTag({ user }: UserTagProps) {
-  console.log(user);
+export function UserTag({ user, className }: UserTagProps) {
+  console.log(className);
   return (
-    <div className={styles.userTag}>
+    <div className={className}>
       {user !== undefined ? (
         <div className={styles.assignedTrue}>
           {user.profilePictureURL ? (

@@ -1,5 +1,5 @@
-.userTag {
-  width: 200px;
+.taskItem {
+  width: 12rem;
   align-items: center;
 }
 
@@ -22,5 +22,6 @@
   flex-direction: row;
   justify-content: flex-start;
   column-gap: 8px;
+  width: 100%;
   align-items: center;
 }
