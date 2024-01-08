@@ -1,0 +1,52 @@
+.details {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.titleContainer {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  column-gap: 2rem;
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  width: 100%;
+}
+
+.infoRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  column-gap: 2rem;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.userTag {
+  width: 800px;
+}
+
+.userName {
+  margin-top: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.title {
+  font: var(--font-heading);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.label {
+  font: var(--font-label);
+}

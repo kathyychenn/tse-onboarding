@@ -8,8 +8,13 @@
   column-gap: 0.25rem;
 }
 
+.item:hover {
+  background-color: var(--color-surface);
+}
+
 .textContainer {
   height: 100%;
+  width: 660px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -35,4 +40,18 @@
 
 .checked {
   color: var(--color-text-secondary);
+}
+
+.item a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.item a:hover {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.userTag {
+  width: 12rem;
 }

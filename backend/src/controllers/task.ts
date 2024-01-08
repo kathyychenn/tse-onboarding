@@ -30,7 +30,7 @@ export const getTask: RequestHandler = async (req, res, next) => {
 
   try {
     // if the ID doesn't exist, then findById returns null
-    const task = await TaskModel.findById(id);
+    const task = await TaskModel.findById(id).populate("assignee").exec();
 
     if (task === null) {
       throw createHttpError(404, "Task not found.");
@@ -49,7 +49,7 @@ export const getTask: RequestHandler = async (req, res, next) => {
 export const createTask: RequestHandler = async (req, res, next) => {
   // extract any errors that were found by the validator
   const errors = validationResult(req);
-  const { title, description, isChecked } = req.body;
+  const { title, description, isChecked, assignee } = req.body;
 
   try {
     // if there are errors, then this function throws an exception
@@ -60,11 +60,14 @@ export const createTask: RequestHandler = async (req, res, next) => {
       description: description,
       isChecked: isChecked,
       dateCreated: Date.now(),
+      assignee: assignee,
     });
+
+    const popTask = await task.populate("assignee");
 
     // 201 means a new resource has been created successfully
     // the newly created task is sent back to the user
-    res.status(201).json(task);
+    res.status(201).json(popTask);
   } catch (error) {
     next(error);
   }
@@ -86,13 +89,16 @@ export const updateTask: RequestHandler = async (req, res, next) => {
   // your code here
   const errors = validationResult(req);
   const { id } = req.params;
-  const { title, description, isChecked, dateCreated } = req.body;
+  const { title, description, isChecked, dateCreated, assignee } = req.body;
 
   try {
     validationErrorParser(errors);
+    console.log("entered updateTask backend");
+    console.log(id);
+    console.log(isChecked);
 
     // check url id and req body id equal
-    if (id != req.body._id) {
+    if (id !== req.body._id) {
       res.status(400);
     }
 
@@ -102,17 +108,23 @@ export const updateTask: RequestHandler = async (req, res, next) => {
       description: description,
       isChecked: isChecked,
       dateCreated: dateCreated,
+      assignee: assignee,
     });
 
+    if (task) {
+      console.log(task.isChecked);
+    }
     // throw error if query null
     if (task === null) {
       throw createHttpError(404, "Task not found.");
     }
 
+    const popTask = await TaskModel.findById(id).populate("assignee").exec();
+
     // Set the status code (200) and body (the task object as JSON) of the response.
     // Note that you don't need to return anything, but you can still use a return
     // statement to exit the function early.
-    res.status(200).json(task);
+    res.status(200).json(popTask);
     // your code here
   } catch (error) {
     next(error);

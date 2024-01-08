@@ -6,7 +6,7 @@ export const getAllTasks: RequestHandler = async (req, res, next) => {
     // your code here
     console.log("enter getalltasks");
 
-    const tasks = await TaskModel.find().sort({ dateCreated: -1 });
+    const tasks = await TaskModel.find().populate("assignee").sort({ dateCreated: -1 });
     console.log(tasks);
     res.status(200).json(tasks);
   } catch (error) {
